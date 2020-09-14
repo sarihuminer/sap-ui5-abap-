@@ -1,0 +1,77 @@
+<mvc:View controllerName="Ztest.Ztest.controller.View4" 
+xmlns="sap.ui.table"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:u="sap.ui.unified"
+	xmlns:c="sap.ui.core"
+	xmlns:m="sap.m"
+	height="100%">
+	<m:Page
+		showHeader="false"
+		enableScrolling="false"
+		class="sapUiContentPadding">
+		<m:content>
+			
+
+			<Table id="table1"
+				rows="{/EtzekpoSet}"
+				selectionMode="MultiToggle"
+				visibleRowCount="8"
+				ariaLabelledBy="title">	
+				<extension>
+					<m:OverflowToolbar>
+						<m:Title id="title" text="Purchase Order"/>
+						<m:ToolbarSpacer/>
+						<m:Button
+							icon="sap-icon://delete"
+							tooltip="delete selected items"
+							press="deleteSelectedIndices"/>
+						<m:Button
+							icon="sap-icon://edit"
+							tooltip="update row"
+							press="lineUpdate"/>
+						<m:Button
+							icon="sap-icon://decline"
+							tooltip="clear selection"
+							press="clearSelection"/>
+							
+					</m:OverflowToolbar>
+				</extension>
+
+				<columns>
+					<Column width="11rem">
+						<m:Label text="{i18n>Ebeln}" />
+						<template>
+							<m:Text text="{Ebeln}" wrapping="false" />
+						</template>
+					</Column>
+					<Column width="11rem">
+						<m:Label text="{i18n>Ebelp}" />
+						<template>
+							<m:Text text="{Ebelp}" wrapping="false" />
+						</template>
+					</Column>
+					<Column width="11rem">
+						<m:Label text="{i18n>Name}" />
+						<template>
+							<m:Input value="{Name}"/>
+						</template>
+					</Column>
+					<Column width="11rem">
+						<m:Label text="{i18n>Amount}" />
+						<template>
+							<m:Input value="{Amount}"/>
+						</template>
+					</Column>
+					<Column width="11rem">
+						<m:Label text="{i18n>Price}" />
+						<template>
+							<m:Input value="{Price}"/>
+						</template>
+					</Column>
+					
+				</columns>
+			</Table>
+	
+		</m:content>
+	</m:Page>
+</mvc:View>

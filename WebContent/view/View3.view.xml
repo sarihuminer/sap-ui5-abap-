@@ -1,0 +1,58 @@
+<mvc:View controllerName="Ztest.Ztest.controller.View3" 
+xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" 
+displayBlock="true" xmlns="sap.m"
+>
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>title}">
+					<content>
+					<IconTabBar
+							id="idIconTabBarMulti"
+							expanded="{device>/isNoPhone}"
+							class="sapUiResponsiveContentPadding"
+							 select=".handleIconTabBarSelect">
+							<items>
+								<IconTabFilter
+									icon= "sap-icon://arrow-left"
+									key="back">
+								</IconTabFilter>
+							</items>
+					</IconTabBar>	
+							<Button type="Reject" text="{i18n>allOrders}"  id="allOrders" press="show"/>
+							<Table id="idMTable" noDataText="{i18n>NoData}"
+								items="{/EtZekkoSet}">
+								<items>
+									<ColumnListItem counter="0" type="Active" press="onPress($event)">
+										<cells>
+											<Text text="{Ebeln}" maxLines="0"   ></Text>
+											<Text text="{Compname}" maxLines="0"></Text>
+											<Text text="{Status}" maxLines="0"></Text>
+										</cells>
+									</ColumnListItem>
+								</items>
+								<columns>
+									<Column hAlign="Right"    >
+										<header >
+											<Text text="{i18n>Ebeln}" textAlign="Right" maxLines="0"></Text>
+										</header>
+									</Column >
+									<Column hAlign="Right" >
+										<header>
+											<Text text="{i18n>Compname}" textAlign="Right" maxLines="0" ></Text>
+										</header>
+									</Column>	
+									<Column hAlign="Right" >
+										<header>
+											<Text text="{i18n>Status}" textAlign="Right" maxLines="0"></Text>
+										</header>
+									</Column>			
+								</columns>
+							</Table>
+			
+					</content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

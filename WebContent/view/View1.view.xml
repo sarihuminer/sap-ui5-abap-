@@ -1,0 +1,69 @@
+<mvc:View controllerName="Ztest.Ztest.controller.View1" 
+xmlns:core="sap.ui.core" 
+xmlns:mvc="sap.ui.core.mvc" 
+displayBlock="true"
+xmlns:form="sap.ui.layout.form"
+height="100%"
+xmlns="sap.m">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>PurchaseOrder}">
+					<content>
+						<IconTabBar
+							id="idIconTabBarMulti"
+							expanded="{device>/isNoPhone}"
+							class="sapUiResponsiveContentPadding"
+							 select=".handleIconTabBarSelect">
+							<items>
+								<IconTabFilter
+									icon="sap-icon://open-command-field"
+									key="continue">
+								</IconTabFilter>
+								<IconTabFilter
+									icon="sap-icon://cart-approval"
+									key="cart">
+								</IconTabFilter>
+							</items>
+					</IconTabBar>	
+				
+				<form:SimpleForm  editable="true">
+
+				<Label text="Enter Ebeln" tooltip="Any character"/>
+				<Input   id ="inputEbeln"></Input>
+
+				<Label text="Category"/>
+					<ComboBox id="cmboxCategories"
+					items="{
+						path: '/Categories',
+						sorter: { path: 'text' }
+					}">
+					<core:Item key="{IdCategory}" text="{CategoryName}" />
+					</ComboBox>
+				<Label text="Date" />						
+				<DatePicker dateValue="{/date}" id="d1"/>
+
+				<Label text="User" />
+				<ComboBox id="cmboxUsers"
+					items="{
+						path: '/Users',
+						sorter: { path: 'text' }
+					}">
+					<core:Item key="{UserId}" text="{FirstName} {LastName}" />
+					</ComboBox>
+
+				  
+				<Label text="Supplier" />
+				<MaskInput mask="~~~~~~~~~~" placeholderSymbol="" >
+					
+				</MaskInput>
+				
+					</form:SimpleForm>
+				
+				
+					</content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

@@ -1,0 +1,60 @@
+<mvc:View controllerName="Ztest.Ztest.controller.View2" 
+xmlns:core="sap.ui.core" 
+xmlns:mvc="sap.ui.core.mvc" 
+displayBlock="true" 
+xmlns="sap.m"
+xmlns:layout="sap.ui.layout"
+xmlns:template="sap.ui.template"
+xmlns:form="sap.ui.layout.form">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>PurchaseOrder}">
+					<content>
+					<IconTabBar
+							id="idIconTabBarMulti"
+							expanded="{device>/isNoPhone}"
+							class="sapUiResponsiveContentPadding"
+							 select=".handleIconTabBarSelect">
+							<items>
+								<IconTabFilter
+									icon= "sap-icon://arrow-left"
+									key="back">
+								</IconTabFilter>
+							</items>
+					</IconTabBar>	
+				<form:SimpleForm title="Create Ekpo" editable="true">
+					<layout:Grid defaultSpan="L12 M12 S12">
+						<layout:content>
+							<form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanM="12" labelSpanL="12" labelSpanXL="12" emptySpanL="6" emptySpanM="6">
+								<form:content>
+									<Label text="order num" />
+									<Text id="ebeln" text="" />
+									<Label text="Products" labelFor="multiInput"/>
+									<MultiInput
+										id="multiInput"
+										valueHelpOnly="true"
+										valueHelpRequest=".onValueHelpRequested"	
+									>
+									</MultiInput>
+										<Input value="{path:'/number', type:'sap.ui.model.type.Currency'}"/>
+								</form:content>
+							</form:SimpleForm>
+						</layout:content>
+					</layout:Grid>
+
+				</form:SimpleForm>	
+					
+				
+				
+				
+				
+	
+
+					</content>
+					
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
