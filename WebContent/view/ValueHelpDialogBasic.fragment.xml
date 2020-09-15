@@ -8,7 +8,8 @@
 		cancel=".onValueHelpCancelPress"
 		afterClose=".onValueHelpAfterClose"
 		key="ItemId"
-		descriptionKey="Name"
+		descriptionKey="ItemName"
+	
 	>
 	
 	</ValueHelpDialog>

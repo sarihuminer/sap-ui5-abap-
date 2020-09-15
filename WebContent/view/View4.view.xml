@@ -28,7 +28,7 @@ xmlns="sap.ui.table"
 						<m:Button
 							icon="sap-icon://edit"
 							tooltip="update row"
-							press="lineUpdate"/>
+							press="UpdateTable"/>
 						<m:Button
 							icon="sap-icon://decline"
 							tooltip="clear selection"

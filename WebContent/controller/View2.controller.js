@@ -13,15 +13,15 @@ sap.ui.define([
 			//this._showFormFragment("productsTable");
 			// Set the initial form to be the display one
 			
-			this.theTokenInputPlant = this.getView().byId("multiInput");
-	         this.bKeys = ["ItemId"];
+			 this._oMultiInput = this.getView().byId("multiInput");
+	         //this.bKeys = ["Name"];
 	         this.bTokens = [];
-	         this.theTokenInputPlant.setTokens(this.bTokens);
+	         this._oMultiInput.setTokens(this.bTokens);
 	         this.orders=this.getItems();
 	         
 			
-			this._oMultiInput = this.getView().byId("multiInput");
-			this._oMultiInput.setTokens(this._getDefaultTokens());
+			//this._oMultiInput = this.getView().byId("multiInput");
+			//this._oMultiInput.setTokens(this._getDefaultTokens());
 
 			this.oColModel =  new JSONModel({
 				"cols": [
@@ -73,10 +73,6 @@ sap.ui.define([
 		onAfterRendering: function(){
 			//this.orders = this.getItems();	
 			},	
-		onPress : function(){
-			var oRouter= sap.ui.core.UIComponent.getRouterFor(this);
-			oRouter.navTo("View1",true);
-		},
 		_formFragments: {},
 		_showFormFragment : function (sFragmentName) {
 			var oPage = this.byId("page");
@@ -102,37 +98,37 @@ sap.ui.define([
 			sUrl = sPath;
 			return sUrl;
 			},
-			create_newOrder: function() {
-				var that = this;
-				var sServiceUrl = this.getServiceUrl();
-				var oModel = new
-				sap.ui.model.odata.ODataModel(sServiceUrl,
-				true);
-				var oFilter = [];
-				
-				var Pname = this.getView().byId("productName")._lastValue;
-				var amount = this.getView().byId("amount")._lastValue;
-				var price = this.getView().byId("price")._lastValue;
-				
-
-				var oEntry = {
-						Ebeln: "1",
-						Ebelp: "0005",
-						Name:  Pname,
-						Amount: parseInt(amount),
-						Price: parseInt(price)
-					};
-				
-				oModel.create("/EtAddEkpoSet", oEntry, {
-					  success: function(oCreatedEntry) {
-					  console.log("succses!");
-					  }, 
-					  error: function(oError) { 
-						  console.log("erorr !!!!!!  :( "); }
-					});
+		create_newOrder: function() {
+			var that = this;
+			var sServiceUrl = this.getServiceUrl();
+			var oModel = new
+			sap.ui.model.odata.ODataModel(sServiceUrl,
+			true);
+			var oFilter = [];
 			
-				},
-				
+			var Pname = this.getView().byId("productName")._lastValue;
+			var amount = this.getView().byId("amount")._lastValue;
+			var price = this.getView().byId("price")._lastValue;
+			
+
+			var oEntry = {
+					Ebeln: "1",
+					Ebelp: "0005",
+					Name:  Pname,
+					Amount: parseInt(amount),
+					Price: parseInt(price)
+				};
+			
+			oModel.create("/EtAddEkpoSet", oEntry, {
+				  success: function(oCreatedEntry) {
+				  console.log("succses!");
+				  }, 
+				  error: function(oError) { 
+					  console.log("erorr !!!!!!  :( "); }
+				});
+		
+			},
+			
 			/*	onValueHelpRequested: function() {
 					var aCols = this.oColModel.getData().cols;
 					console.log(aCols);
@@ -168,90 +164,89 @@ sap.ui.define([
 					this._oValueHelpDialog.open();
 				},
 				*/
-				onValueHelpRequested: function() {
-					var aCols = this.oColModel.getData().cols;
-					this._oValueHelpDialog = sap.ui.xmlfragment("Ztest.Ztest.view.ValueHelpDialogBasic", this);
-					this.getView().addDependent(this._oValueHelpDialog);
+			onValueHelpRequested: function() {
+				var aCols = this.oColModel.getData().cols;
+				this._oValueHelpDialog = sap.ui.xmlfragment("Ztest.Ztest.view.ValueHelpDialogBasic", this);
+				this.getView().addDependent(this._oValueHelpDialog);
 
-					this._oValueHelpDialog.getTableAsync().then(function (oTable) {
-						oTable.setModel(window.orders);
-						oTable.setModel(this.oColModel, "columns");
+				this._oValueHelpDialog.getTableAsync().then(function (oTable) {
+					oTable.setModel(window.orders);
+					oTable.setModel(this.oColModel, "columns");
 
-						if (oTable.bindRows) {
-							oTable.bindAggregation("rows", "/Items");
-						}
+					if (oTable.bindRows) {
+						oTable.bindAggregation("rows", "/Items");
+					}
 
-						if (oTable.bindItems) {
-							oTable.bindAggregation("items", "/Items", function () {
-								return new ColumnListItem({
-									cells: aCols.map(function (column) {
-										return new Label({ text: "{" + column.template + "}" });
-									})
-								});
+					if (oTable.bindItems) {
+						oTable.bindAggregation("items", "/Items", function () {
+							return new ColumnListItem({
+								cells: aCols.map(function (column) {
+									return new Label({ text: "{" + column.template + "}" });
+								})
 							});
-						}
-						this._oValueHelpDialog.update();
-					}.bind(this));
+						});
+					}
+					this._oValueHelpDialog.update();
+				}.bind(this));
 
-					this._oValueHelpDialog.setTokens(this._oMultiInput.getTokens());
-					this._oValueHelpDialog.open();
-				},
+				this._oValueHelpDialog.setTokens(this._oMultiInput.getTokens());
+				this._oValueHelpDialog.open();
+			},
 
-				
-				getItems: function(){
-					var that = this;
-					var sServiceUrl = this.getServiceUrl();
-					var oModel = new
-					sap.ui.model.odata.ODataModel(sServiceUrl,true);
-					var oFilter = [];
-					 //var dataOrders=[];
-					oFilter.push(new sap.ui.model.Filter("IvCategory", sap.ui.model.FilterOperator.EQ, '1'));
-					oModel.read("/EtItemsSet", {filters: oFilter ,
-						 success: function(data) {
-							// dataOrders=data.results;
-							 console.log(data.results);
-							 var oJModel = new sap.ui.model.json.JSONModel();
-
-							 oJModel.setData({Items: data.results});
-							 window.orders=oJModel;
-							return oJModel;
-						console.log('success');
-						//var input=that.getView().byId("cmboxItems");
-						//input.setModel(oJModel);
-						 return dataOrders;
-						 },
-						 error : function(event) {
-						 console.log('error');
-						 }
-						 });
-				},
-
-				onValueHelpOkPress: function (oEvent) {
-					var aTokens = oEvent.getParameter("tokens");
-					this._oMultiInput.setTokens(aTokens);
-					this._oValueHelpDialog.close();
-				},
-
-				onValueHelpCancelPress: function () {
-				
-					this._oValueHelpDialog.close();
-					
-				},
-
-				onValueHelpAfterClose: function () {
-					this._oValueHelpDialog.destroy();
-				},
-
-				_getDefaultTokens: function () {
-					var oToken = new Token({
-						key: "HT-1001",
-						text: "Notebook Basic 17 (HT-1001)"
-						
-					});
-
-					return [oToken];
-				},
 			
+			getItems: function(){
+				var that = this;
+				var sServiceUrl = this.getServiceUrl();
+				var oModel = new
+				sap.ui.model.odata.ODataModel(sServiceUrl,true);
+				var oFilter = [];
+				 //var dataOrders=[];
+				var categoryId= window.data.Category;
+				oFilter.push(new sap.ui.model.Filter("IvCategory", sap.ui.model.FilterOperator.EQ,/*categoryId*/'1' ));
+				oModel.read("/EtItemsSet", {filters: oFilter ,
+					 success: function(data) {
+						// dataOrders=data.results;
+						 console.log(data.results);
+						 var oJModel = new sap.ui.model.json.JSONModel();
+
+						 oJModel.setData({Items: data.results});
+						 window.orders=oJModel;
+						return oJModel;
+					console.log('success');
+					 return dataOrders;
+					 },
+					 error : function(event) {
+					 console.log('error');
+					 }
+					 });
+			},
+
+			onValueHelpOkPress: function (oEvent) {
+				var aTokens = oEvent.getParameter("tokens");
+				this._oMultiInput.setTokens(aTokens);
+				this._oValueHelpDialog.close();
+			},
+
+			onValueHelpCancelPress: function () {
+			
+				this._oValueHelpDialog.close();
+				
+			},
+
+			onValueHelpAfterClose: function () {
+				this._oValueHelpDialog.destroy();
+			},
+
+			/*_getDefaultTokens: function () {
+				var oToken = new Token({
+					key: "HT-1001",
+					text: "Notebook Basic 17 (HT-1001)"
+					
+				});
+
+				return [oToken];
+			},*/
+		
 				
 				
 				

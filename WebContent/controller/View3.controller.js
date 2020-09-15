@@ -51,13 +51,13 @@ sap.ui.define([
 			sUrl = sPath;
 			return sUrl; 
 			},
-			onPress: function (oEvent) {
-				var ebeln = oEvent.oSource.mAggregations.cells[0].mProperties.text;
-				var oItem = oEvent.getSource();
-				var oRouter= sap.ui.core.UIComponent.getRouterFor(this);
-				window.globalVariable=ebeln;
-				oRouter.navTo("View4");	
-				},
+		onPress: function (oEvent) {
+			var ebeln = oEvent.oSource.mAggregations.cells[0].mProperties.text;
+			var oItem = oEvent.getSource();
+			var oRouter= sap.ui.core.UIComponent.getRouterFor(this);
+			window.globalVariable=ebeln;
+			oRouter.navTo("View4");	
+			},
 				
 			
 			
