@@ -68,6 +68,7 @@ sap.ui.define([
 		onBeforeRendering: function(){
 			var ebelnText= this.getView().byId("ebeln");
 			ebelnText.setText(window.data.Ebeln.getValue());
+			this.orders=this.getItems();
 			
 			},
 		onAfterRendering: function(){
@@ -98,7 +99,37 @@ sap.ui.define([
 			sUrl = sPath;
 			return sUrl;
 			},
-		create_newOrder: function() {
+			create_newOrderEkko: function() {
+				var that = this;
+				var sServiceUrl = this.getServiceUrl();
+				var oModel = new
+				sap.ui.model.odata.ODataModel(sServiceUrl,
+				true);
+				var oFilter = [];
+				
+				var Pname = this.getView().byId("productName")._lastValue;
+				var amount = this.getView().byId("amount")._lastValue;
+				var price = this.getView().byId("price")._lastValue;
+				
+
+				var oEntry = {
+						Ebeln: "1",
+						Ebelp: "0005",
+						Name:  Pname,
+						Amount: parseInt(amount),
+						Price: parseInt(price)
+					};
+				
+				oModel.create("/EtAddEkpoSet", oEntry, {
+					  success: function(oCreatedEntry) {
+					  console.log("succses!");
+					  }, 
+					  error: function(oError) { 
+						  console.log("erorr !!!!!!  :( "); }
+					});
+			
+				},
+			create_newOrder: function() {
 			var that = this;
 			var sServiceUrl = this.getServiceUrl();
 			var oModel = new
@@ -201,8 +232,8 @@ sap.ui.define([
 				sap.ui.model.odata.ODataModel(sServiceUrl,true);
 				var oFilter = [];
 				 //var dataOrders=[];
-				var categoryId= window.data.Category;
-				oFilter.push(new sap.ui.model.Filter("IvCategory", sap.ui.model.FilterOperator.EQ,/*categoryId*/'1' ));
+				var categoryId= window.data.Category.mProperties.selectedKey;
+				oFilter.push(new sap.ui.model.Filter("IvCategory", sap.ui.model.FilterOperator.EQ,categoryId ));
 				oModel.read("/EtItemsSet", {filters: oFilter ,
 					 success: function(data) {
 						// dataOrders=data.results;

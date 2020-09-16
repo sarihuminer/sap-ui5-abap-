@@ -23,6 +23,8 @@ xmlns:form="sap.ui.layout.form">
 								</IconTabFilter>
 							</items>
 					</IconTabBar>	
+						
+
 				<form:SimpleForm title="Create Ekpo" editable="true">
 					<layout:Grid defaultSpan="L12 M6 S4">
 						<layout:content>

@@ -15,7 +15,7 @@ xmlns="sap.ui.table"
 			<Table id="table1"
 				rows="{/EtzekpoSet}"
 				selectionMode="MultiToggle"
-				visibleRowCount="8"
+				
 				ariaLabelledBy="title">	
 				<extension>
 					<m:OverflowToolbar>
@@ -33,7 +33,10 @@ xmlns="sap.ui.table"
 							icon="sap-icon://decline"
 							tooltip="clear selection"
 							press="clearSelection"/>
-							
+						<m:Button
+						text="Save Changes"
+						press="saveChanges"
+						/>
 					</m:OverflowToolbar>
 				</extension>
 

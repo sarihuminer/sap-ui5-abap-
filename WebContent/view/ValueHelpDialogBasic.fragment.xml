@@ -9,9 +9,9 @@
 		afterClose=".onValueHelpAfterClose"
 		key="ItemId"
 		descriptionKey="ItemName"
-	
-	>
+			>
 	
 	</ValueHelpDialog>
+	
 	
 </core:FragmentDefinition>

@@ -72,6 +72,7 @@ sap.ui.define([
 			this.lineDelete(cells[0].mProperties.text,cells[1].mProperties.text,i);
 	         }
 			}
+			
 			MessageToast.show(sMsg);
 		},
 
@@ -117,9 +118,13 @@ sap.ui.define([
 		  oFilter.push(new sap.ui.model.Filter('IvName',  sap.ui.model.FilterOperator.EQ, name ));
           oFilter.push(new sap.ui.model.Filter('IvPrice', sap.ui.model.FilterOperator.EQ,price ));
           oFilter.push(new sap.ui.model.Filter('IvAmount',sap.ui.model.FilterOperator.EQ,amount));       
-          oModel.read('/zupdateSet', {filters: oFilter ,
+          oModel.read('/EtUpdateLineSet', {filters: oFilter ,
         	  success: function(data) {
         		  alert("suc"); 
+        		  var oJModel = new sap.ui.model.json.JSONModel();
+					 oJModel.setData({EtzekpoSet: data.results});
+					var oTable = that.getView().byId("table1");
+					 oTable.setModel(oJModel);	
         	  },
 		      error : function(event) {
 		    	  alert('error');
@@ -133,13 +138,17 @@ sap.ui.define([
 		    var that = this;
 			var sServiceUrl   = '/sap/opu/odata/sap/ZUI5PURCHASE_ORDERS_SRV';
 			var oModel = new sap.ui.model.odata.ODataModel(sServiceUrl, true);
-			/*var oFilter = [];
+			var oFilter = [];
 			 oFilter.push(new sap.ui.model.Filter("IvEbeln", sap.ui.model.FilterOperator.EQ,ebeln));
-			 oFilter.push(new sap.ui.model.Filter("IvEbelp", sap.ui.model.FilterOperator.EQ,ebelp));*/
-			var readUrl ="/EtDeleteLineSet('"+ebeln+"','"+ebelp+"')";
-			oModel.read(readUrl,{ 
+			 oFilter.push(new sap.ui.model.Filter("IvEbelp", sap.ui.model.FilterOperator.EQ,ebelp));
+		
+			oModel.read('/EtDeleteLineSet',{filters: oFilter , 
 				success: function(data) { 
 					alert("sucses delete");
+					var oJModel = new sap.ui.model.json.JSONModel();
+					 oJModel.setData({EtzekpoSet: data.results});
+					var oTable = that.getView().byId("table1");
+					 oTable.setModel(oJModel);	
 					 },
 				 error : function(event) {
 				 alert('error');
